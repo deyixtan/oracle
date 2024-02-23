@@ -1,5 +1,6 @@
 <script>
 	import { fileToImagePart, queryModel } from '../utils/gemini';
+	import { marked } from '../utils/marked';
 	import { messages, settings } from '../utils/stores';
 
 	let key = '';
@@ -41,7 +42,7 @@
 					{:else if role === 'model'}
 						<strong>Oracle</strong>:
 					{/if}
-					<p>{parts}</p>
+					{@html marked.parse(parts)}
 				</div>
 			{/each}
 		</div>

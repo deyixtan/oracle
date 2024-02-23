@@ -12,7 +12,10 @@
 	},
 	"dependencies": {
 		"@google/generative-ai": "^0.2.1",
-		"@macfja/svelte-persistent-store": "^2.4.1"
+		"@macfja/svelte-persistent-store": "^2.4.1",
+		"highlight.js": "^11.9.0",
+		"marked": "^12.0.0",
+		"marked-highlight": "^2.1.1"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
