@@ -36,7 +36,7 @@
 	}
 </script>
 
-<div class="mt-3 overflow-y-auto border-2 bg-base-100 p-3" use:scrollToBottom={$messages}>
+<div class="mt-3 flex-grow overflow-y-auto border-2 bg-base-100 p-3" use:scrollToBottom={$messages}>
 	{#each $messages as { role, parts }}
 		{#if role === 'user'}
 			<div class="chat chat-start">
