@@ -20,12 +20,12 @@
 </script>
 
 <div class="container flex flex-col h-screen mx-auto base-100">
-	<div class="my-3 p-3 flex-grow overflow-y-auto base-200">
+	<div class="my-3 p-3 flex-grow overflow-y-auto base-300">
 		{#each messages as { user, text }}
-			<div class="my-2 p-4 bg-neutral"><strong>{user}</strong>: {text}</div>
+			<div class="my-2 p-4 bg-primary"><strong>{user}</strong>: <p>{text}</p></div>
 		{/each}
 	</div>
-	<div class="my-3 p-3 base-200">
+	<div class="my-3 p-3 base-300">
 		<label for="inputKey">API Key:</label>
 		<input
 			id="inputKey"
