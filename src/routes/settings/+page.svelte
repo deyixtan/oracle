@@ -10,6 +10,8 @@
 
 	async function handleSave() {
 		$settings = { apiKey: key };
+		alert('Settings saved!');
+		location.href = `${base}/settings`;
 	}
 
 	async function handleWipeSettings() {

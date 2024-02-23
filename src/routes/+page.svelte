@@ -21,41 +21,41 @@
 	async function handleSend() {
 		sending = true;
 
-		$messages = [...$messages, { role: 'user', parts: prompt }];
-
 		const input = { key, prompt, images };
 		const history = $messages;
-		const response = await queryModel(input, history);
 
-		$messages = [...$messages, { role: 'model', parts: response.result.toString() }];
+		$messages = [...$messages, { role: 'user', parts: prompt }];
+		const response = await queryModel(input, history);
+		$messages = [...$messages, { role: 'model', parts: response.result }];
 
 		document.querySelector('input[type=file]').value = null;
 		prompt = '';
 		images = [];
+
 		sending = false;
 	}
 </script>
 
-<div class="mt-3 flex-grow overflow-y-auto border-2 bg-base-100 p-3" use:scrollToBottom={$messages}>
+<div class="mt-3 overflow-y-auto border-2 bg-base-100 p-3" use:scrollToBottom={$messages}>
 	{#each $messages as { role, parts }}
 		{#if role === 'user'}
 			<div class="chat chat-start">
 				<div class="chat-image">
 					<strong>You</strong>
 				</div>
-				<div class="chat-bubble chat-bubble-info">{@html marked.parse(parts)}</div>
+				<div class="chat-bubble chat-bubble-info break-words">{@html marked.parse(parts)}</div>
 			</div>
 		{:else}
 			<div class="chat chat-end">
 				<div class="chat-image">
 					<strong>Oracle</strong>
 				</div>
-				<div class="chat-bubble chat-bubble-success">{@html marked.parse(parts)}</div>
+				<div class="chat-bubble chat-bubble-success break-words">{@html marked.parse(parts)}</div>
 			</div>
 		{/if}
 	{/each}
 </div>
-<div class="base-100 mt-3 border-2 p-3">
+<div class="mt-3 border-2 bg-base-100 p-3">
 	<span class="label-text mr-3">Prompt:</span>
 	<textarea
 		class="textarea textarea-bordered textarea-primary my-2 w-full"
