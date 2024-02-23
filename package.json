@@ -11,7 +11,8 @@
 		"format": "prettier --write ."
 	},
 	"dependencies": {
-		"@google/generative-ai": "^0.2.1"
+		"@google/generative-ai": "^0.2.1",
+		"@macfja/svelte-persistent-store": "^2.4.1"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
