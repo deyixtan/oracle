@@ -1,38 +1,51 @@
-# create-svelte
+# oracle
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+Oracle is a performant and user-friendly AI chatbot client. It's designed to provide engaging conversational experiences by leveraging cutting-edge AI models.
 
-## Creating a project
+## Version 1.0.0
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Features
+
+- **Mobile-First**: Beautiful themed UI that adapts seamlessly to various screen sizes and dark mode setting.
+- **Intelligent Conversation**: Leverages the advanced capabilities of Google's Gemini Pro and Vision AI models for fact-based answers and creative text generation.
+- **Performance and Responsiveness**: Powered by the Svelte framework for a smooth and snappy chat experience.
+- **Personalized Experience**: Remembers user conversations and preferences through `localStorage` and `IndexedDB`.
+
+## Screenshot
+
+<img src="./docs/ss_light.png " alt="light mode" width="400">
+<img src="./docs/ss_dark.png " alt="dark mode" width="400">
+
+## Usage
+
+### Project Setup
+
+1. Clone the repository:
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+git clone https://github.com/deyixtan/oracle.git && cd oracle
 ```
 
-## Developing
+2. Install dependencies:
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+```bash
+npm install
+```
+
+## Run in Development Mode
 
 ```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+## Deployment
 
-To create a production version of your app:
+1. Prepare for production::
 
 ```bash
+npm run format
 npm run build
+npm run preview
 ```
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+2. Deploy the contents of the `/build` directory to your preferred hosting platform.

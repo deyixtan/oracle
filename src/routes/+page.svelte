@@ -24,7 +24,10 @@
 		const input = { key, prompt, images };
 		const history = $messages;
 
-		$messages = [...$messages, { role: 'user', parts: prompt }];
+		const result =
+			images.length === 0 ? prompt : `*[Images were attached to this prompt]*\n\n${prompt}`;
+			
+		$messages = [...$messages, { role: 'user', parts: result }];
 		const response = await queryModel(input, history);
 		$messages = [...$messages, { role: 'model', parts: response.result }];
 
