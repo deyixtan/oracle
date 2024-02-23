@@ -29,6 +29,16 @@
 			apiKey: key
 		};
 	}
+
+	async function handleWipeSettings() {
+		settings.delete();
+		alert('Settings wiped, please refresh!');
+	}
+
+	async function handleWipeHistory() {
+		messages.delete();
+		alert('History wiped, please refresh!');
+	}
 </script>
 
 <div role="tablist" class="tabs-boxed tabs bg-base-100">
@@ -79,8 +89,10 @@
 	<div role="tabpanel" class="tab-content h-full bg-base-100 p-6">
 		<label class="label">
 			<span class="label-text">API Key</span>
-			<input type="text" class="input input-bordered input-primary" bind:value={key} />
+			<input type="text" class="input input-bordered input-primary w-full" bind:value={key} />
 		</label>
 		<button class="btn btn-primary my-2 w-full" on:click={handleSave}>Save</button>
+		<button class="btn btn-error my-2 w-full" on:click={handleWipeSettings}>Wipe Settings</button>
+		<button class="btn btn-error my-2 w-full" on:click={handleWipeHistory}>Wipe History</button>
 	</div>
 </div>
