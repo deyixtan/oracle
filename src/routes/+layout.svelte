@@ -2,4 +2,19 @@
 	import '../app.pcss';
 </script>
 
-<slot />
+<div class="flex h-screen w-screen flex-col">
+	<div class="navbar bg-base-100">
+		<div class="navbar-start"></div>
+		<div class="navbar-center">
+			<a href="/" class="btn btn-ghost text-xl">Oracle</a>
+		</div>
+		<div class="navbar-end">
+			<ul class="menu menu-horizontal px-1">
+				<li><a href="/settings">Settings</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="container m-auto flex h-full w-full flex-col bg-base-100 p-2">
+		<slot />
+	</div>
+</div>
