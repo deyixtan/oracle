@@ -1,4 +1,5 @@
 <script>
+	import { base } from '$app/paths';
 	import '../app.pcss';
 </script>
 
@@ -6,11 +7,11 @@
 	<div class="navbar bg-base-100">
 		<div class="navbar-start"></div>
 		<div class="navbar-center">
-			<a href="/" class="btn btn-ghost text-xl">Oracle</a>
+			<a href="{base}/" class="btn btn-ghost text-xl">Oracle</a>
 		</div>
 		<div class="navbar-end">
 			<ul class="menu menu-horizontal px-1">
-				<li><a href="/settings">Settings</a></li>
+				<li><a href="{base}/settings">Settings</a></li>
 			</ul>
 		</div>
 	</div>

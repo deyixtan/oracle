@@ -1,4 +1,5 @@
 <script>
+	import { base } from '$app/paths';
 	import { messages, settings } from '../../utils/stores';
 
 	let key = '';
@@ -14,13 +15,13 @@
 	async function handleWipeSettings() {
 		settings.delete();
 		alert('Settings wiped!');
-		location.href = '/settings';
+		location.href = `${base}/settings`;
 	}
 
 	async function handleWipeHistory() {
 		messages.delete();
 		alert('History wiped!');
-		location.href = '/settings';
+		location.href = `${base}/settings`;
 	}
 </script>
 
