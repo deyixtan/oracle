@@ -36,14 +36,21 @@
 	<div role="tabpanel" class="tab-content h-full bg-base-100 p-6">
 		<div class="mt-3 flex-grow overflow-y-auto border-2 bg-base-100 p-3">
 			{#each $messages as { role, parts }}
-				<div class="my-2 bg-primary p-4">
-					{#if role === 'user'}
-						<strong>You</strong>:
-					{:else if role === 'model'}
-						<strong>Oracle</strong>:
-					{/if}
-					{@html marked.parse(parts)}
-				</div>
+				{#if role === 'user'}
+					<div class="chat chat-start">
+						<div class="chat-image">
+							<strong>You</strong>
+						</div>
+						<div class="chat-bubble chat-bubble-info">{@html marked.parse(parts)}</div>
+					</div>
+				{:else}
+					<div class="chat chat-end">
+						<div class="chat-image">
+							<strong>Oracle</strong>
+						</div>
+						<div class="chat-bubble chat-bubble-success">{@html marked.parse(parts)}</div>
+					</div>
+				{/if}
 			{/each}
 		</div>
 		<div class="base-100 mt-3 p-3">
