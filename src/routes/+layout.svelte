@@ -3,7 +3,7 @@
 	import '../app.pcss';
 </script>
 
-<div class="flex h-screen w-screen flex-col">
+<div class="flex h-[calc(100dvh)] w-screen flex-col">
 	<div class="navbar bg-base-100">
 		<div class="navbar-start"></div>
 		<div class="navbar-center">
@@ -15,7 +15,7 @@
 			</ul>
 		</div>
 	</div>
-	<div class="container m-auto flex h-[calc(100vh-65px)] w-full flex-col bg-base-100 p-2">
+	<div class="container m-auto flex h-[calc(100dvh-65px)] w-full flex-col bg-base-100 p-2">
 		<slot />
 	</div>
 </div>
