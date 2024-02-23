@@ -16,10 +16,11 @@
 	}
 
 	async function handleSend() {
-		$messages = [...$messages, { user: 'You', text: prompt }];
+		const history = $messages;
+		$messages = [...$messages, { role: 'user', parts: prompt }];
 
-		const response = await queryModel({ key, prompt, images });
-		$messages = [...$messages, { user: 'Oracle', text: response.result }];
+		const response = await queryModel({ key, prompt, images }, history);
+		$messages = [...$messages, { role: 'model', parts: response.result }];
 	}
 
 	async function handleSave() {
@@ -33,10 +34,14 @@
 	<input type="radio" name="tabList" role="tab" class="tab" aria-label="Chat" checked />
 	<div role="tabpanel" class="tab-content h-full bg-base-100 p-6">
 		<div class="mt-3 flex-grow overflow-y-auto border-2 bg-base-100 p-3">
-			{#each $messages as { user, text }}
+			{#each $messages as { role, parts }}
 				<div class="my-2 bg-primary p-4">
-					<strong>{user}</strong>:
-					<p>{text}</p>
+					{#if role === 'user'}
+						<strong>You</strong>:
+					{:else if role === 'model'}
+						<strong>Oracle</strong>:
+					{/if}
+					<p>{parts}</p>
 				</div>
 			{/each}
 		</div>

@@ -11,7 +11,7 @@ export async function fileToImagePart(file) {
 	};
 }
 
-export async function queryModel(input) {
+export async function queryModel(input, history) {
 	const output = {
 		error: false,
 		result: ''
@@ -29,7 +29,8 @@ export async function queryModel(input) {
 	try {
 		const genAI = new GoogleGenerativeAI(input.key);
 		const model = genAI.getGenerativeModel({ model: modelType });
-		const result = await model.generateContent(userQuery);
+		const chat = model.startChat({ history });
+		const result = await chat.sendMessage(userQuery);
 		output.result = result.response.text();
 	} catch (error) {
 		output.error = true;
