@@ -6,7 +6,11 @@ const config = {
 		extend: {}
 	},
 
-	plugins: [require("daisyui")]
+	plugins: [require('@tailwindcss/typography'), require('daisyui')],
+	daisyui: {
+		themes: ['light', 'dark'],
+		darkTheme: 'dark'
+	}
 };
 
 module.exports = config;
