@@ -16,20 +16,22 @@
 	async function handleFileUpload(event) {
 		const files = event.target.files;
 		images = await Promise.all([...files].map(fileToImagePart));
-		event.target.value = null;
 	}
 
 	async function handleSend() {
 		sending = true;
-		const input = { key, prompt, images };
-		const history = $messages;
 
 		$messages = [...$messages, { role: 'user', parts: prompt }];
+
+		const input = { key, prompt, images };
+		const history = $messages;
+		const response = await queryModel(input, history);
+
+		$messages = [...$messages, { role: 'model', parts: response.result.toString() }];
+
+		document.querySelector('input[type=file]').value = null;
 		prompt = '';
 		images = [];
-
-		const response = await queryModel(input, history);
-		$messages = [...$messages, { role: 'model', parts: response.result.toString() }];
 		sending = false;
 	}
 </script>
@@ -55,7 +57,11 @@
 </div>
 <div class="base-100 mt-3 border-2 p-3">
 	<span class="label-text mr-3">Prompt:</span>
-	<textarea class="textarea textarea-bordered textarea-primary my-2 w-full" bind:value={prompt} />
+	<textarea
+		class="textarea textarea-bordered textarea-primary my-2 w-full"
+		disabled={sending}
+		bind:value={prompt}
+	/>
 
 	<span class="label-text mr-3">Images (optional):</span>
 	<input
@@ -63,6 +69,7 @@
 		accept="image/*"
 		multiple
 		class="file-input file-input-bordered file-input-primary my-2 w-full"
+		disabled={sending}
 		on:change={handleFileUpload}
 	/>
 

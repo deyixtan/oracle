@@ -29,9 +29,14 @@ export async function queryModel(input, history) {
 	try {
 		const genAI = new GoogleGenerativeAI(input.key);
 		const model = genAI.getGenerativeModel({ model: modelType });
-		const chat = model.startChat({ history });
-		const result = await chat.sendMessage(userQuery);
-		output.result = result.response.text();
+		if (input.images.length === 0) {
+			const chat = model.startChat({ history });
+			const result = await chat.sendMessage(userQuery);
+			output.result = result.response.text();
+		} else {
+			const result = await model.generateContent(userQuery);
+			output.result = result.response.text();
+		}
 	} catch (error) {
 		output.error = true;
 		output.result = error;
