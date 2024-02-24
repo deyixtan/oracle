@@ -5,12 +5,14 @@
 	import { scrollToBottom } from '../utils/ui';
 
 	let key = '';
+	let debug = false;
 	let prompt = '';
 	let images = [];
 	let sending = false;
 
 	settings.subscribe((settings) => {
 		key = settings.apiKey || '';
+		debug = settings.debug || false;
 	});
 
 	async function handleFileUpload(event) {
@@ -21,15 +23,26 @@
 	async function handleSend() {
 		sending = true;
 
+		while ($messages.length > 0 && $messages[$messages.length - 1].role != 'model') {
+			$messages.pop();
+		}
+
 		const input = { key, prompt, images };
 		const history = $messages;
 
 		const result =
 			images.length === 0 ? prompt : `*[Images were attached to this prompt]*\n\n${prompt}`;
-			
+
 		$messages = [...$messages, { role: 'user', parts: result }];
-		const response = await queryModel(input, history);
-		$messages = [...$messages, { role: 'model', parts: response.result }];
+		const response = await queryModel(input, history, debug);
+		if (response.error) {
+			$messages = [
+				...$messages,
+				{ role: 'model', parts: `An error occurred...\n${response.result}` }
+			];
+		} else {
+			$messages = [...$messages, { role: 'model', parts: response.result }];
+		}
 
 		document.querySelector('input[type=file]').value = null;
 		prompt = '';
@@ -48,7 +61,7 @@
 				</div>
 				<div class="chat-bubble chat-bubble-info break-words">{@html marked.parse(parts)}</div>
 			</div>
-		{:else}
+		{:else if role === 'model'}
 			<div class="chat chat-end">
 				<div class="chat-image">
 					<strong>Oracle</strong>

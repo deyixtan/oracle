@@ -11,7 +11,7 @@ export async function fileToImagePart(file) {
 	};
 }
 
-export async function queryModel(input, history) {
+export async function queryModel(input, history, debug = false) {
 	const output = {
 		error: false,
 		result: ''
@@ -19,7 +19,7 @@ export async function queryModel(input, history) {
 
 	if (!input || !input.key || !input.prompt || !input.images) {
 		output.error = true;
-		output.result = 'Input specified is corrupted';
+		output.result = 'Please ensure valid API key, prompt or image files...';
 		return output;
 	}
 
@@ -39,7 +39,7 @@ export async function queryModel(input, history) {
 		}
 	} catch (error) {
 		output.error = true;
-		output.result = error;
+		output.result = debug ? error.message : '';
 	}
 	return output;
 }
