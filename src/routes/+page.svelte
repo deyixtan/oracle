@@ -35,7 +35,11 @@
 
 		$messages = [...$messages, { role: 'user', parts: result }];
 		$messages = [...$messages, { role: 'model', parts: '' }];
-		await queryModel(input, history, debug, (text) => {
+		await queryModel(input, history, debug, (text, error) => {
+			if (error) {
+				$messages[$messages.length - 1].parts = text;
+				return;
+			}
 			$messages[$messages.length - 1].parts += text;
 		});
 
@@ -47,46 +51,53 @@
 	}
 </script>
 
-<div class="mt-3 flex-grow overflow-y-auto border-2 bg-base-100 p-3" use:scrollToBottom={$messages}>
+<div
+	class="mt-3 flex-grow overflow-y-auto rounded-2xl border-2 border-neutral bg-base-300 p-6 shadow-2xl"
+	use:scrollToBottom={$messages}
+>
 	{#each $messages as { role, parts }}
 		{#if role === 'user'}
 			<div class="chat chat-start">
-				<div class="chat-image">
+				<div class="chat-image text-base-content">
 					<strong>You</strong>
 				</div>
-				<div class="chat-bubble chat-bubble-info break-words">{@html marked.parse(parts)}</div>
+				<div
+					class="border-1 chat-bubble chat-bubble-primary break-words border-neutral p-4 text-primary-content shadow-lg"
+				>
+					{@html marked.parse(parts)}
+				</div>
 			</div>
 		{:else if role === 'model'}
 			<div class="chat chat-end">
-				<div class="chat-image">
+				<div class="chat-image text-base-content">
 					<strong>Oracle</strong>
 				</div>
-				<div class="chat-bubble chat-bubble-success break-words">{@html marked.parse(parts)}</div>
+				<div
+					class="border-1 chat-bubble chat-bubble-secondary break-words border-neutral p-4 text-secondary-content shadow-lg"
+				>
+					{@html marked.parse(parts)}
+				</div>
 			</div>
 		{/if}
 	{/each}
 </div>
-<div class="mt-3 border-2 bg-base-100 p-3">
-	<span class="label-text mr-3">Prompt:</span>
-	<textarea
-		class="textarea textarea-bordered textarea-primary my-2 w-full"
-		disabled={sending}
-		bind:value={prompt}
-	/>
+<div class="mt-3 rounded-2xl border-2 border-neutral bg-base-300 p-6 shadow-2xl">
+	<span class="label-text mr-3 text-base-content">Prompt:</span>
+	<textarea class="textarea-neutral textarea my-2 w-full" disabled={sending} bind:value={prompt} />
 
-	<span class="label-text mr-3">Images (optional):</span>
+	<span class="label-text mr-3 text-base-content">Images (optional):</span>
 	<input
 		type="file"
 		accept="image/*"
 		multiple
-		class="file-input file-input-bordered file-input-primary my-2 w-full"
+		class="file-input-neutral file-input my-2 w-full"
 		disabled={sending}
 		on:change={handleFileUpload}
 	/>
 
-	<button class="btn btn-primary my-2 w-full" disabled={sending} on:click={handleSend}>
+	<button class="btn btn-info my-2 w-full" disabled={sending} on:click={handleSend}>
 		{#if sending}
-			<span class="loading loading-spinner"></span>
+			<span class="loading loading-infinity loading-lg"></span>
 		{:else}
 			<span>Send</span>
 		{/if}

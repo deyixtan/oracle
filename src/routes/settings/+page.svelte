@@ -29,14 +29,16 @@
 	}
 </script>
 
-<label class="label">
-	<span class="label-text">API Key</span>
-	<input type="text" class="input input-bordered input-primary w-full" bind:value={key} />
-</label>
-<label class="label">
-	<span class="label-text">Debug Mode</span>
-	<input type="checkbox" class="checkbox-primary checkbox" bind:checked={debug} />
-</label>
-<button class="btn btn-primary my-2 w-full" on:click={handleSave}>Save</button>
-<button class="btn btn-error my-2 w-full" on:click={handleWipeSettings}>Wipe Settings</button>
-<button class="btn btn-error my-2 w-full" on:click={handleWipeHistory}>Wipe History</button>
+<div class="mt-3 rounded-2xl border-2 border-neutral bg-base-300 p-6 shadow-2xl">
+	<label class="label">
+		<span class="label-text text-base-content">API Key</span>
+		<input type="text" class="input-neutral input w-full" bind:value={key} />
+	</label>
+	<label class="label">
+		<span class="label-text text-base-content">Debug Mode</span>
+		<input type="checkbox" class="checkbox-neutral checkbox" bind:checked={debug} />
+	</label>
+	<button class="btn btn-info my-2 w-full" on:click={handleSave}>Save</button>
+	<button class="btn btn-error my-2 w-full" on:click={handleWipeSettings}>Wipe Settings</button>
+	<button class="btn btn-error my-2 w-full" on:click={handleWipeHistory}>Wipe History</button>
+</div>

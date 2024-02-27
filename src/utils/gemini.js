@@ -13,9 +13,7 @@ export async function fileToImagePart(file) {
 
 export async function queryModel(input, history, debug, output_callback) {
 	if (!input || !input.key || !input.prompt || !input.images) {
-		output_callback(
-			'<span style="color:red">Please ensure valid API key, prompt or image files...</span>'
-		);
+		output_callback('Please ensure valid API key, prompt or image files...', true);
 		return;
 	}
 
@@ -36,11 +34,10 @@ export async function queryModel(input, history, debug, output_callback) {
 
 		// callback with stream data
 		for await (const chunk of result.stream) {
-			output_callback(chunk.text());
+			output_callback(chunk.text(), false);
 		}
 	} catch (error) {
-		output_callback(
-			`<span style="color:red">An error occurred...\n${debug ? error.message : ''}</span>`
-		);
+		const exception_output = debug ? `\n\n${error.message}` : '';
+		output_callback(`An error occurred...${exception_output}`, true);
 	}
 }

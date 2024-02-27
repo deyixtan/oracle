@@ -8,8 +8,8 @@ const config = {
 
 	plugins: [require('@tailwindcss/typography'), require('daisyui')],
 	daisyui: {
-		themes: ['cmyk', 'business'],
-		darkTheme: 'business'
+		themes: ['nord', 'dim'],
+		darkTheme: 'dim'
 	}
 };
 
