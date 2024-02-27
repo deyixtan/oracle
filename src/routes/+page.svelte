@@ -34,15 +34,10 @@
 			images.length === 0 ? prompt : `*[Images were attached to this prompt]*\n\n${prompt}`;
 
 		$messages = [...$messages, { role: 'user', parts: result }];
-		const response = await queryModel(input, history, debug);
-		if (response.error) {
-			$messages = [
-				...$messages,
-				{ role: 'model', parts: `An error occurred...\n${response.result}` }
-			];
-		} else {
-			$messages = [...$messages, { role: 'model', parts: response.result }];
-		}
+		$messages = [...$messages, { role: 'model', parts: '' }];
+		await queryModel(input, history, debug, (text) => {
+			$messages[$messages.length - 1].parts += text;
+		});
 
 		document.querySelector('input[type=file]').value = null;
 		prompt = '';

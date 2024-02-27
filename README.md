@@ -1,20 +1,20 @@
 # oracle
 
-Oracle is a performant and user-friendly AI chatbot client. It's designed to provide engaging conversational experiences by leveraging cutting-edge AI models.
+Oracle is a AI chatbot client designed to provide engaging conversational experiences by leveraging cutting-edge AI models.
 
-## Version 1.1.0
+## Version 1.2.0
 
 ## Features
 
-- **Mobile-First**: Beautiful themed UI that adapts seamlessly to various screen sizes and dark mode setting.
-- **Intelligent Conversation**: Leverages the advanced capabilities of Google's Gemini Pro and Vision AI models for fact-based answers and creative text generation.
+- **Mobile-First**: Beautiful themed UI that adapts seamlessly to various screen sizes.
+- **Intelligent Conversation**: Leverages the advanced capabilities of large language models to generate human-like responses.
 - **Performance and Responsiveness**: Powered by the Svelte framework for a smooth and snappy chat experience.
 - **Personalized Experience**: Remembers user conversations and preferences through `localStorage` and `IndexedDB`.
 
-## Screenshot
+## Screenshots
 
-<img src="./docs/ss_light.png " alt="light mode" width="400">
-<img src="./docs/ss_dark.png " alt="dark mode" width="400">
+<img src="./docs/ss_light.png " alt="light mode" width="300">
+<img src="./docs/ss_dark.png " alt="dark mode" width="300">
 
 ## Usage
 
@@ -32,15 +32,15 @@ git clone https://github.com/deyixtan/oracle.git && cd oracle
 npm install
 ```
 
-## Run in Development Mode
+### Run in Development Mode
 
 ```bash
 npm run dev
 ```
 
-## Deployment
+### Deployment
 
-1. Prepare for production::
+1. Prepare for production:
 
 ```bash
 npm run format

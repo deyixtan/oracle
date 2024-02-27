@@ -11,16 +11,12 @@ export async function fileToImagePart(file) {
 	};
 }
 
-export async function queryModel(input, history, debug = false) {
-	const output = {
-		error: false,
-		result: ''
-	};
-
+export async function queryModel(input, history, debug, output_callback) {
 	if (!input || !input.key || !input.prompt || !input.images) {
-		output.error = true;
-		output.result = 'Please ensure valid API key, prompt or image files...';
-		return output;
+		output_callback(
+			'<span style="color:red">Please ensure valid API key, prompt or image files...</span>'
+		);
+		return;
 	}
 
 	const modelType = input.images.length === 0 ? 'gemini-pro' : 'gemini-pro-vision';
@@ -29,17 +25,22 @@ export async function queryModel(input, history, debug = false) {
 	try {
 		const genAI = new GoogleGenerativeAI(input.key);
 		const model = genAI.getGenerativeModel({ model: modelType });
+
+		let result;
 		if (input.images.length === 0) {
 			const chat = model.startChat({ history });
-			const result = await chat.sendMessage(userQuery);
-			output.result = result.response.text();
+			result = await chat.sendMessageStream([userQuery]);
 		} else {
-			const result = await model.generateContent(userQuery);
-			output.result = result.response.text();
+			result = await model.generateContentStream([userQuery]);
+		}
+
+		// callback with stream data
+		for await (const chunk of result.stream) {
+			output_callback(chunk.text());
 		}
 	} catch (error) {
-		output.error = true;
-		output.result = debug ? error.message : '';
+		output_callback(
+			`<span style="color:red">An error occurred...\n${debug ? error.message : ''}</span>`
+		);
 	}
-	return output;
 }
