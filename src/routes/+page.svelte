@@ -1,5 +1,5 @@
 <script>
-	import { encode } from 'html-entities';
+	import DOMPurify from 'isomorphic-dompurify';
 	import { fileToImagePart, queryModel } from '../utils/gemini';
 	import { marked } from '../utils/marked';
 	import { messages, settings } from '../utils/stores';
@@ -34,11 +34,13 @@
 		const result =
 			images.length === 0 ? prompt : `*[Images were attached to this prompt]*\n\n${prompt}`;
 
-		// only encode user input when rendering HTML
-		// not required to encode response from model
-		$messages = [...$messages, { role: 'user', parts: encode(result) }];
-		$messages = [...$messages, { role: 'model', parts: '' }];
+		$messages = [...$messages, { role: 'user', parts: result }];
 		await queryModel(input, history, debug, (text, error) => {
+			// only start adding model response when there is stream data
+			if ($messages[$messages.length - 1].role != 'model') {
+				$messages = [...$messages, { role: 'model', parts: '' }];
+			}
+
 			if (error) {
 				$messages[$messages.length - 1].parts = text;
 				return;
@@ -67,7 +69,7 @@
 				<div
 					class="border-1 chat-bubble chat-bubble-primary break-words border-neutral p-4 text-primary-content shadow-lg"
 				>
-					{@html marked.parse(parts)}
+					{@html DOMPurify.sanitize(marked.parse(parts))}
 				</div>
 			</div>
 		{:else if role === 'model'}
@@ -78,7 +80,7 @@
 				<div
 					class="border-1 chat-bubble chat-bubble-secondary break-words border-neutral p-4 text-secondary-content shadow-lg"
 				>
-					{@html marked.parse(parts)}
+					{@html DOMPurify.sanitize(marked.parse(parts))}
 				</div>
 			</div>
 		{/if}

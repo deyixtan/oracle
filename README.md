@@ -2,7 +2,7 @@
 
 Oracle is a AI chatbot client designed to provide engaging conversational experiences by leveraging cutting-edge AI models.
 
-## Version 1.3.1
+## Version 1.3.2
 
 ## Features
 
