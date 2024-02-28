@@ -1,4 +1,5 @@
 <script>
+	import { encode } from 'html-entities';
 	import { fileToImagePart, queryModel } from '../utils/gemini';
 	import { marked } from '../utils/marked';
 	import { messages, settings } from '../utils/stores';
@@ -33,7 +34,9 @@
 		const result =
 			images.length === 0 ? prompt : `*[Images were attached to this prompt]*\n\n${prompt}`;
 
-		$messages = [...$messages, { role: 'user', parts: result }];
+		// only encode user input when rendering HTML
+		// not required to encode response from model
+		$messages = [...$messages, { role: 'user', parts: encode(result) }];
 		$messages = [...$messages, { role: 'model', parts: '' }];
 		await queryModel(input, history, debug, (text, error) => {
 			if (error) {
